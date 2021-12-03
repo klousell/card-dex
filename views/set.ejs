@@ -1,0 +1,20 @@
+<%- include('partials/header') -%>
+<div class="container">
+  <div class="results-header">
+  <h2>Set: <%= searchedSet %></h2>
+  <p>Select card for more information</p>
+  </div>
+<div class="card-section">
+  <% cardImages.forEach(image => { %>
+    <div class="image">
+    <img src="<%=image%>" alt="image">
+    </div>
+<% }); %>
+
+<p>Looking for something else? <a href="/">Search again</a></p>
+
+</div>
+</div>
+
+
+<%- include('partials/footer') -%>

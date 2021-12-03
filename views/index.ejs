@@ -1,0 +1,48 @@
+<%- include('partials/header'); -%>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-lg-6">
+
+      <div class="header">
+        <h1>The Card Dex</h1>
+        <h3 class="subheader">A Card Database for the Pokémon TCG</h3>
+      </div>
+
+      <div class="form">
+        <form class="mb-3" action="/" method="post">
+          <input class="form-control" type="text" name="pokemonName" placeholder="Card name..." maxlength="12" required>
+          <p>ex. "Charizard"</p>
+          <div class="series-list">
+            <select class="form-select" aria-label="Default select example" name="setId">
+              <option value="">Set (optional)</option>
+              <% for(i = 0; i < cardSetNames.length; i++){ %>
+                <option value="<%=cardSetIds[i]%>"><%=cardSetNames[i]%></option>
+              <% }; %>
+            </select>
+          </div>
+          <button class="btn btn-dark btn-lg" type="submit" name="button">Search</button>
+        </form>
+      </div>
+      <p>Or <a href="/sets">browse sets</a></p>
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+  var field = document.querySelector('[name="pokemonName"]');
+
+  field.addEventListener('keypress', function ( event ) {
+   var key = event.keyCode;
+    if (key === 32) {
+      event.preventDefault();
+    }
+  });
+
+</script>
+
+<%- include('partials/footer'); -%>

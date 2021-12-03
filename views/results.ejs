@@ -1,0 +1,27 @@
+<%- include('partials/header'); -%>
+
+<div class="container">
+  <% if (cardImages.length > 0) { %>
+  <div class="results-header">
+  <h2>Displaying Results for "<%= searchedPokemon %>" in Set: <%= searchedSet %></h2>
+  <p>Select card for more information</p>
+  </div>
+    <div class="card-section">
+      <% cardImages.forEach(image => { %>
+        <div class="image">
+        <img src="<%=image%>" alt="image">
+        </div>
+    <% }); %>
+
+    <p>Looking for something else? <a href="/">Search again</a></p>
+
+    </div>
+  <% } else { %>
+    <div class="results-header">
+    <h2>No Results Found for "<%= searchedPokemon %>"</h2>
+    <p>Check spelling or try entering a different Set</p>
+    <a href="/">Search again</a>
+    </div>
+  <% } %>
+
+<%- include('partials/footer'); -%>

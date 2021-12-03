@@ -1,0 +1,96 @@
+/* font-family: 'Inconsolata', monospace;
+font-family: 'Montserrat', sans-serif; */
+body {
+    background-color: #256B6D;
+}
+
+.container-fluid {
+  background-image: url('../images/backgroundimage.jpg');
+  background-size: 100% 100%;
+  text-align: center;
+  padding: 15% 0;
+
+}
+
+.row {
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 72px;
+  font-weight: 900;
+  color: #F2F2F2;
+}
+
+h2, h3, p {
+  font-family: 'Inconsolata', monospace;
+  color: #F2F2F2;
+}
+
+.subheader {
+  font-size: 24px;
+}
+
+.form {
+  padding-top: 10%;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.series-list {
+  padding: 10% 0;
+}
+
+.btn-dark {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  padding: 10px 30%;
+  background-color: #9A9A9A;
+  border: none;
+}
+
+/* Sets Page */
+.sets-header {
+  padding: 5% 0;
+}
+
+/* Results Page */
+
+.results-header {
+  padding: 5% 0 3% 5%;
+}
+
+.card-section {
+  padding: 20px 0;
+  text-align: center;
+  /* background-color: #303030; */
+}
+
+.card-section p {
+  margin-top: 5%;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: grey;
+}
+
+.image {
+  display: inline-block;
+  padding: 10px;
+}
+
+.logos {
+  display: inline-block;
+  padding: 30px;
+}
+
+.container {
+  text-align: center;
+}
