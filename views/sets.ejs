@@ -15,10 +15,10 @@
 
   <div class="container">
     <h2 class="sets-header">Sets</h2>
-    <% for(i = 0; i < cardSetIds.length; i++) { %>
+    <% for(i = 0; i < setData.length; i++) { %>
     <div class="logos">
-      <a href="/sets/<%=cardSetIds[i]%>"><img src="<%=cardSetLogos[i]%>" width="300" height="110" alt=""></a>
-      <p><%=cardSetNames[i]%></p>
+      <a href="/sets/<%=setData[i].id%>"><img src="<%=setData[i].logo%>" width="300" height="110" alt=""></a>
+      <p><%=setData[i].name%></p>
     </div>
     <% }; %>
   </div>

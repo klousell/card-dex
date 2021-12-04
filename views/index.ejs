@@ -17,8 +17,8 @@
           <div class="series-list">
             <select class="form-select" aria-label="Default select example" name="setId">
               <option value="">Set (optional)</option>
-              <% for(i = 0; i < cardSetNames.length; i++){ %>
-                <option value="<%=cardSetIds[i]%>"><%=cardSetNames[i]%></option>
+              <% for(i = 0; i < setData.length; i++){ %>
+                <option value="<%=setData[i].id%>"><%=setData[i].name%></option>
               <% }; %>
             </select>
           </div>

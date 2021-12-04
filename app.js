@@ -11,37 +11,26 @@ app.use(express.static(__dirname + "/public"));
 
 pokemon.configure({apiKey: process.env.API_KEY});
 
-let cardSetNames = [];
-let cardSetIds = [];
-let cardSetLogos = [];
 let cardImages = [];
 let searchedPokemon = "";
 let searchedSet = "";
 
-https.get('https://api.pokemontcg.io/v2/sets/', (res) => {
+let setData = [];
 
-  let allData = '';
-  res.on('data', (d) => {
-    allData += d;
+pokemon.set.all()
+.then((sets) => {
+  sets.forEach(set => {
+    setData.push({
+      "name": set.name,
+      "id": set.id,
+      "logo": set.images.logo
+    });
   });
-
-  res.on('end', () => {
-    const parsedData = JSON.parse(allData);
-    for (i = 0; i < parsedData.data.length; i++) {
-      cardSetNames.push(parsedData.data[i].name);
-      cardSetIds.push(parsedData.data[i].id);
-      cardSetLogos.push(parsedData.data[i].images.logo);
-    }
-
-  });
-
-}).on('error', (e) => {
-  console.log(e);
 });
 
 app.get("/", function(req, res) {
-      searchedSet = "";
-      res.render('index', {cardSetNames: cardSetNames, cardSetIds: cardSetIds});
+  searchedSet = "";
+  res.render('index', {setData: setData});
 });
 
 app.get("/results", function(req, res){
@@ -49,8 +38,8 @@ app.get("/results", function(req, res){
 });
 
 app.get('/sets', function(req, res) {
-  res.render('sets', {cardSetLogos: cardSetLogos, cardSetIds: cardSetIds, cardSetNames: cardSetNames})
-    cardImages = [];
+  res.render('sets', {setData: setData})
+  cardImages = [];
 });
 
 app.post("/", function(req, res){
@@ -58,33 +47,34 @@ app.post("/", function(req, res){
   setId = req.body.setId;
   pokemon.card.all({q: 'name:' + searchedPokemon})
   .then(cards => {
-    for (i = 0; i < cards.length; i++) {
-      if (cards[i].set.id === setId) {
-      searchedSet = cards[i].set.name;
-      cardImages.push(cards[i].images.small);
-    } else if (setId === "") {
+    cards.forEach(card => {
+      if (card.set.id === setId) {
+      searchedSet = card.set.name;
+      cardImages.push(card.images.small);
+      } else if (setId === "") {
       searchedSet = "All";
-      cardImages.push(cards[i].images.small);
-    }
-    }
+      cardImages.push(card.images.small);
+      }
+    });
    res.redirect("/results");
   })
-     cardImages = []
+     cardImages = [];
 });
 
 app.get('/sets/:setId', function(req, res) {
-  cardSetIds.forEach(cardSetId => {
-    if (req.params.setId == cardSetId) {
-      pokemon.card.all({q: 'set.id:' + cardSetId})
+  for (i = 0; i < setData.length; i++) {
+    if (req.params.setId == setData[i].id) {
+      pokemon.card.all({q: 'set.id:' + setData[i].id})
       .then(cards => {
         cards.forEach(card => {
           cardImages.push(card.images.small);
           searchedSet = card.set.name;
         });
         res.render('set', {cardImages: cardImages, searchedSet: searchedSet});
+        cardImages = [];
       });
     };
-  });
+  };
 });
 
 app.listen(3000, function() {
