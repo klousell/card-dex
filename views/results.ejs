@@ -1,17 +1,19 @@
 <%- include('partials/header'); -%>
 
 <div class="container">
-  <% if (cardImages.length > 0) { %>
+  <% if (cardData.length > 0) { %>
   <div class="results-header">
   <h2>Displaying Results for "<%= searchedPokemon %>" in Set: <%= searchedSet %></h2>
   <p>Select card for more information</p>
   </div>
     <div class="card-section">
-      <% cardImages.forEach(image => { %>
-        <div class="image">
-        <img src="<%=image%>" alt="image">
-        </div>
-    <% }); %>
+      <%  for(i = 0; i < cardData.length; i++) {  %>
+          <a href="/cards/<%=cardData[i].id%>">
+            <div class="image">
+            <img src="<%=cardData[i].image%>" alt="image">
+            </div>
+          </a>
+      <%  }  %>    
 
     <p>Looking for something else? <a href="/">Search again</a></p>
 

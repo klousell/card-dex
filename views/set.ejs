@@ -5,11 +5,13 @@
   <p>Select card for more information</p>
   </div>
 <div class="card-section">
-  <% cardImages.forEach(image => { %>
-    <div class="image">
-    <img src="<%=image%>" alt="image">
-    </div>
-<% }); %>
+<%  for(i = 0; i < cardData.length; i++) {  %>
+    <a href="/cards/<%=cardData[i].id%>">
+      <div class="image">
+      <img src="<%=cardData[i].images.small%>" alt="image">
+      </div>
+    </a>
+<%  }  %>
 
 <p>Looking for something else? <a href="/">Search again</a></p>
 

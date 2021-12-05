@@ -1,0 +1,9 @@
+<%- include('partials/header') -%>
+
+<h2>something went wrong</h2>
+<% if (searchedPokemon != "") { %>
+  <p>"<%= searchedPokemon %>" is an invalid entry</p>
+<% } %>
+<p><a href="/">Search again</a></p>
+
+<%- include('partials/footer') -%>

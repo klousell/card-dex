@@ -11,11 +11,11 @@ app.use(express.static(__dirname + "/public"));
 
 pokemon.configure({apiKey: process.env.API_KEY});
 
-let cardImages = [];
 let searchedPokemon = "";
 let searchedSet = "";
 
 let setData = [];
+let cardData = [];
 
 pokemon.set.all()
 .then((sets) => {
@@ -26,6 +26,9 @@ pokemon.set.all()
       "logo": set.images.logo
     });
   });
+}).catch(error => {
+  console.log(error);
+  res.redirect("/error");
 });
 
 app.get("/", function(req, res) {
@@ -33,49 +36,70 @@ app.get("/", function(req, res) {
   res.render('index', {setData: setData});
 });
 
-app.get("/results", function(req, res){
-  res.render('results', {cardImages: cardImages, searchedPokemon: searchedPokemon, searchedSet: searchedSet})
+app.get("/results", function(req, res) {
+  res.render('results', {searchedPokemon: searchedPokemon, searchedSet: searchedSet, cardData: cardData});
 });
 
 app.get('/sets', function(req, res) {
   res.render('sets', {setData: setData})
-  cardImages = [];
 });
 
 app.post("/", function(req, res){
   searchedPokemon = req.body.pokemonName;
   setId = req.body.setId;
-  pokemon.card.all({q: 'name:' + searchedPokemon})
+  pokemon.card.all({q: 'name:' + [searchedPokemon] + "*"})
   .then(cards => {
     cards.forEach(card => {
       if (card.set.id === setId) {
       searchedSet = card.set.name;
-      cardImages.push(card.images.small);
+      cardData.push({
+        "id": card.id,
+        "image": card.images.small
+      });
       } else if (setId === "") {
       searchedSet = "All";
-      cardImages.push(card.images.small);
-      }
+      cardData.push({
+        "id": card.id,
+        "image": card.images.small
+      });
+      };
     });
-   res.redirect("/results");
-  })
-     cardImages = [];
+    res.redirect('/results');
+    }).catch(error => {
+   console.log(error);
+   res.redirect("/error");
+   });
+   cardData = [];
 });
 
 app.get('/sets/:setId', function(req, res) {
-  for (i = 0; i < setData.length; i++) {
-    if (req.params.setId == setData[i].id) {
-      pokemon.card.all({q: 'set.id:' + setData[i].id})
-      .then(cards => {
-        cards.forEach(card => {
-          cardImages.push(card.images.small);
-          searchedSet = card.set.name;
+    setData.forEach(set => {
+      if (req.params.setId == set.id) {
+        pokemon.card.all({q: 'set.id:' + set.id})
+        .then(cards => {
+          searchedSet = cards[0].set.name;
+          res.render('set', {searchedSet: searchedSet, cardData: cards});
+          }).catch(error => {
+          console.log(error);
+          res.redirect("/error");
         });
-        res.render('set', {cardImages: cardImages, searchedSet: searchedSet});
-        cardImages = [];
-      });
-    };
-  };
+      };
+    });
 });
+
+app.get('/cards/:cardId', function(req, res) {
+    pokemon.card.find(req.params.cardId)
+    .then(card => {
+      res.render('card', {cardData: card});
+    }).catch(error => {
+      console.log(error);
+      res.redirect("/error");
+    });
+  });
+
+app.get("/error", function(req, res) {
+  res.render('error', {searchedPokemon: searchedPokemon});
+})
 
 app.listen(3000, function() {
   console.log("listening on port 3000")
