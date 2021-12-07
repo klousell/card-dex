@@ -1,5 +1,26 @@
 <%- include('partials/header') -%>
 
-<h1><%=cardData.name%></h1>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="card-image col-lg-6">
+      <h1><%=cardData.name%></h1>
+      <p><%=cardData.set.name%></p>
+      <img src="<%=cardData.images.small%>" alt="">
+    </div>
+    <div class="col-lg-6">
+      <h2><%=cardData.supertype%></h2>
+      <p><%=cardData.rarity%></p>
+      <hr>
+      <h3>Prices</h3>
+      <% if (cardData.tcgplayer.prices.holofoil) { %>
+        <p>Market: $<%=cardData.tcgplayer.prices.holofoil.market%></p>
+      <% } else { %>
+        <p>Market: $<%=cardData.tcgplayer.prices.market%></p>
+      <% } %>
+    </div>
+  </div>
+
+</div>
 
 <%- include('partials/footer') -%>

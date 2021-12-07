@@ -2,9 +2,19 @@
 font-family: 'Montserrat', sans-serif; */
 body {
     background-color: #256B6D;
+    color: #F2F2F2;
 }
 
-.container-fluid {
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
+h2, h3, p {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container-fluid.homepage {
   background-image: url('../images/backgroundimage.jpg');
   background-size: 100% 100%;
   text-align: center;
@@ -12,20 +22,22 @@ body {
 
 }
 
+.container-fluid {
+  padding: 5% 10%;
+}
+
+.container {
+  margin: 5%;
+}
+
 .row {
   margin: 0;
 }
 
-h1 {
+.header h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 72px;
   font-weight: 900;
-  color: #F2F2F2;
-}
-
-h2, h3, p {
-  font-family: 'Inconsolata', monospace;
-  color: #F2F2F2;
 }
 
 .subheader {
@@ -51,8 +63,28 @@ h2, h3, p {
 }
 
 /* Sets Page */
+
 .sets-header {
-  padding: 5% 0;
+  padding: 3% 3%;
+}
+
+.set-row {
+  margin: 0 3% 3%;
+}
+
+.logo {
+  background-color: #24989c;
+  padding: 20px;
+  border: solid 10px #256B6D;
+  text-align: center;
+  display: inline-block;
+}
+
+.logo p {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 /* Results Page */
@@ -74,7 +106,7 @@ h2, h3, p {
 a {
   display: inline-block;
   text-decoration: none;
-  color: white;
+  color: #F2F2F2;
 }
 
 a:hover {
@@ -93,4 +125,14 @@ a:hover {
 
 .container {
   text-align: center;
+}
+
+/* Card Page */
+
+.card-image {
+  text-align: center;
+}
+
+.card-image img {
+  height: 60vh;
 }

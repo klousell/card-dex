@@ -17,19 +17,22 @@ let searchedSet = "";
 let setData = [];
 let cardData = [];
 
-pokemon.set.all()
+pokemon.set.all({orderBy:'releaseDate'})
 .then((sets) => {
   sets.forEach(set => {
     setData.push({
       "name": set.name,
+      "series": set.series,
       "id": set.id,
-      "logo": set.images.logo
+      "logo": set.images.logo,
+      "symbol": set.images.symbol
     });
   });
 }).catch(error => {
   console.log(error);
   res.redirect("/error");
 });
+
 
 app.get("/", function(req, res) {
   searchedSet = "";
@@ -41,7 +44,7 @@ app.get("/results", function(req, res) {
 });
 
 app.get('/sets', function(req, res) {
-  res.render('sets', {setData: setData})
+  res.render('sets', {setData: setData});
 });
 
 app.post("/", function(req, res){
@@ -99,7 +102,7 @@ app.get('/cards/:cardId', function(req, res) {
 
 app.get("/error", function(req, res) {
   res.render('error', {searchedPokemon: searchedPokemon});
-})
+});
 
 app.listen(3000, function() {
   console.log("listening on port 3000")
